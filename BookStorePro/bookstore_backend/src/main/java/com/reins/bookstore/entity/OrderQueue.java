@@ -1,16 +1,16 @@
-package com.reins.bookstore.controller;
+package com.reins.bookstore.entity;
 
 import org.springframework.context.annotation.Bean;
 
 public class OrderQueue {
 
 	private String to;
-	private String body;
+	private Integer body;
 
 	public OrderQueue() {
 	}
 
-	public OrderQueue(String to, String body) {
+	public OrderQueue(String to, Integer body) {
 		this.to = to;
 		this.body = body;
 	}
@@ -23,11 +23,11 @@ public class OrderQueue {
 		this.to = to;
 	}
 
-	public String getBody() {
+	public Integer getBody() {
 		return body;
 	}
 
-	public void setBody(String body) {
+	public void setBody(Integer body) {
 		this.body = body;
 	}
 

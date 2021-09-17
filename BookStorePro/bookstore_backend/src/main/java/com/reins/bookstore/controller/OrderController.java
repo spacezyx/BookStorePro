@@ -1,6 +1,7 @@
 package com.reins.bookstore.controller;
 
-import com.reins.bookstore.serviceimpl.OrderServiceImpl;
+import com.reins.bookstore.entity.OrderQueue;
+import com.reins.bookstore.service.OrderService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,7 +47,7 @@ public class OrderController {
     WebApplicationContext applicationContext;
 
     @Autowired
-    private OrderServiceImpl orderServiceImpl;
+    private OrderService orderService;
 
     @RequestMapping("/addOrder")
     public String addOrder(@RequestBody Object params) {
@@ -56,11 +57,11 @@ public class OrderController {
 
         System.out.println("Sending an message to service");
         //jmsTemplate.convertAndSend("order", new CartResult());
-        jmsTemplate.convertAndSend("mailbox", new OrderQueue("info@example.com", "Hello Msg"));
+        jmsTemplate.convertAndSend("order", new OrderQueue("order",user_id));
 
         System.out.println(user_id);
 
-        orderServiceImpl.addOrder(user_id);
+//        orderServiceImpl.addOrder(user_id);
 
         return "订单已接收";
 
