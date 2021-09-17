@@ -87,3 +87,41 @@ INSERT INTO `image` VALUES ('1','http://img3m4.ddimg.cn/32/35/23579654-1_u_3.jpg
                            ('4','http://img3m9.ddimg.cn/75/6/25067469-1_u_2.jpg' ),
                            ('5','http://img3m9.ddimg.cn/75/6/25067469-1_u_2.jpg'),
                            ('6', 'http://img3m1.ddimg.cn/88/0/25479421-1_w_1.jpg');
+
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE `cart` (
+                         `id` int(11) AUTO_INCREMENT,
+                         `user_id` int(11) DEFAULT NULL,
+                         `book_id` int(11) DEFAULT NULL,
+                         `num` int(11) DEFAULT NULL,
+                         PRIMARY KEY (`id`),
+                         FOREIGN KEY(user_id) REFERENCES user(user_id),
+                         FOREIGN KEY(book_id) REFERENCES book(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `cart` VALUES ('1','1','2','3' ),
+                           ('2','1','3','4');
+
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order` (
+                        `id` int(11) AUTO_INCREMENT,
+                        `user_id` int(11) DEFAULT NULL,
+                        PRIMARY KEY (`id`),
+                        FOREIGN KEY(user_id) REFERENCES user(user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `order` VALUES ('1','1'),
+                          ('2','3');
+
+DROP TABLE IF EXISTS `order_info`;
+CREATE TABLE `order_info` (
+                        `id` int(11) AUTO_INCREMENT,
+                        `book_id` int(11) DEFAULT NULL,
+                        `order_id` int(11) DEFAULT NULL,
+                        `num` int(11) DEFAULT NULL,
+                        PRIMARY KEY (`id`),
+                        FOREIGN KEY(book_id) REFERENCES book(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `order_info` VALUES ('1','1','1','1'),
+                           ('2','1','1','2');
