@@ -13,8 +13,9 @@ CREATE TABLE `book` (
   `price` decimal(10,2) DEFAULT NULL,
   `description` varchar(2000) DEFAULT NULL,
   `inventory` int(11) DEFAULT NULL,
-  `image_id` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `image_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY(image_id) REFERENCES image(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
