@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+//有状态服务
 @Service
 @Scope("prototype")
 public class CartServiceImpl implements CartService {

@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface UserDao {
 
     Optional<UserInfo> getUserByUsername(String username);
+
+    Integer getUserId(String userName);
 }

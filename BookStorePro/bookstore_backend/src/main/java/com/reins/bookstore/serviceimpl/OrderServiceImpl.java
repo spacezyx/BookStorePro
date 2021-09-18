@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
 
+//JMS异步处理订单程序 service B：监听OrderQueue，一旦读到消息立即进行处理，将数据写入数据库
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired

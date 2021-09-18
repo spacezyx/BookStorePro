@@ -2,6 +2,8 @@ package com.reins.bookstore.entity;
 
 import org.springframework.context.annotation.Bean;
 
+
+//OrderQueue 用于JMS异步处理订单程序
 public class OrderQueue {
 
 	private String to;

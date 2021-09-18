@@ -34,6 +34,12 @@ export class SideBar extends React.Component {
         history.push("/admin")
     }
 
+    CartViewOnClick = ()=>{
+        history.push("/CartView")
+    }
+
+
+
     render() {
         return (
             <div style={{width:this.state.collapsed? "80px":"180px", maxWidth:this.state.collapsed? "80px":"180px", minWidth:this.state.collapsed? "80px":"180px" }}>
@@ -44,7 +50,7 @@ export class SideBar extends React.Component {
                         <Icon type="read" style={{ fontSize: '18px'}}/>
                         <span style={{ fontSize: '16px'}}>Books</span>
                     </Menu.Item>
-                    <Menu.Item key="2">
+                    <Menu.Item key="2" onClick={this.CartViewOnClick}>
                         <Icon type="shopping-cart" style={{ fontSize: '18px'}} />
                         <span style={{ fontSize: '16px'}}>My Cart</span>
                     </Menu.Item>

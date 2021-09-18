@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface UserService {
 
     Optional<UserInfo> getUserInfo(String userName);
+
+    Integer getUserId(String userName);
 }

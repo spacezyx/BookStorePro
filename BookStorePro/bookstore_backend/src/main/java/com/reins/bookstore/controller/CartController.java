@@ -12,6 +12,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
+
+//有状态服务
 @RestController
 @Scope("prototype")
 public class CartController {

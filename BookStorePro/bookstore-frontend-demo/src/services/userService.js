@@ -75,3 +75,10 @@ export const checkSession = (callback) => {
     postRequest(url, {}, callback);
 };
 
+export const getUserId = (username, callback) => {
+    const data = {username: username};
+    const url = `${config.apiUrl}/getUserId`;
+    postRequest_v2(url, data, callback);
+};
+
+

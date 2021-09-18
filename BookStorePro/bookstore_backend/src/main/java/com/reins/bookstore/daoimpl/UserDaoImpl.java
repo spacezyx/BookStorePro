@@ -34,4 +34,9 @@ public class UserDaoImpl implements UserDao {
         }
         return Optional.empty();
     }
+
+    @Override
+    public Integer getUserId(String userName){
+        return userAuthRepository.findUserIdByUserName(userName);
+    }
 }

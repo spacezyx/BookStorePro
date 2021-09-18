@@ -8,6 +8,7 @@ import {Route} from "react-router";
 import HomeView from "./HomeView";
 import BookView from "./BookView";
 import AdminView from "./AdminView";
+import CartView from "./CartView";
 
 
 const { Header, Content, Footer } = Layout;
@@ -31,6 +32,7 @@ class HomeLayout extends React.Component{
                             <Route path="/home" component={HomeView}/>
                             <Route path="/bookDetails" component={BookView}/>
                             <Route path="/admin" component={AdminView}/>
+                            <Route path="/CartView" component={CartView}/>
                         </Switch>
                     </Content>
                 </Layout>

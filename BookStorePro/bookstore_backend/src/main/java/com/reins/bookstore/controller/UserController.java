@@ -1,5 +1,6 @@
 package com.reins.bookstore.controller;
 
+import com.reins.bookstore.entity.Image;
 import com.reins.bookstore.entity.UserInfo;
 import com.reins.bookstore.security.SecurityUtils;
 import com.reins.bookstore.service.UserService;
@@ -28,5 +29,11 @@ public class UserController {
         Optional<UserInfo> userInfoOptional =  userService.getUserInfo(SecurityUtils.getCurrentUsername());
         return userInfoOptional.orElse(null);
     }
+
+    @RequestMapping("/getUserId")
+    public Integer getUserId(@RequestParam("username") String username){
+        return userService.getUserId(username);
+    }
+
 
 }

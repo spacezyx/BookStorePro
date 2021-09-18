@@ -21,6 +21,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.jms.ConnectionFactory;
 
+
+//JMS异步处理订单程序 controller A：反馈给用户订单已接收并将订单数据发送到OrderQueue
 @RestController
 @EnableJms
 public class OrderController {
@@ -29,13 +31,11 @@ public class OrderController {
     public JmsListenerContainerFactory<?> myFactory(@Qualifier("jmsConnectionFactory") ConnectionFactory connectionFactory,
                                                     DefaultJmsListenerContainerFactoryConfigurer configurer) {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        // This provides all boot's default to this factory, including the message converter
         configurer.configure(factory, connectionFactory);
-        // You could still override some of Boot's default if necessary.
         return factory;
     }
 
-    @Bean // Serialize message content to json using TextMessage
+    @Bean
     public MessageConverter jacksonJmsMessageConverter() {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setTargetType(MessageType.TEXT);
@@ -46,9 +46,6 @@ public class OrderController {
     @Autowired
     WebApplicationContext applicationContext;
 
-    @Autowired
-    private OrderService orderService;
-
     @RequestMapping("/addOrder")
     public String addOrder(@RequestBody Object params) {
         JSONObject jsonObject = JSONObject.fromObject(params);
@@ -56,7 +53,6 @@ public class OrderController {
         JmsTemplate jmsTemplate = applicationContext.getBean(JmsTemplate.class);
 
         System.out.println("Sending an message to service");
-        //jmsTemplate.convertAndSend("order", new CartResult());
         jmsTemplate.convertAndSend("order", new OrderQueue("order",user_id));
 
         System.out.println(user_id);
