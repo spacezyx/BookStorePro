@@ -1,6 +1,7 @@
 import React from 'react';
 import { Descriptions, Button } from 'antd';
 import {getBookImage} from "../services/bookService";
+import { InputNumber } from 'antd';
 
 
 
@@ -51,6 +52,8 @@ export class BookDetail extends React.Component{
                         </Descriptions>
                     </div>
                 </div>
+
+
                 <div className={"button-groups"}>
                     <Button type="danger" icon="shopping-cart" size={"large"}>
                         加入购物车

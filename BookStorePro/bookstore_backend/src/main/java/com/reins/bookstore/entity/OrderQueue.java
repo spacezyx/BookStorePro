@@ -34,7 +34,7 @@ public class OrderQueue {
 	@Override
 	@Bean
 	public String toString() {
-		return String.format("Email{to=%s, body=%s}", getTo(), getBody());
+		return String.format("to=%s, body=%s", getTo(), getBody());
 	}
 
 }

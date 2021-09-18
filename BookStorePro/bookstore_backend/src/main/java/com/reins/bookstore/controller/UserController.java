@@ -22,7 +22,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     @RequestMapping("/checkAuth")
     public UserInfo checkAuth(){
         System.out.println("123");

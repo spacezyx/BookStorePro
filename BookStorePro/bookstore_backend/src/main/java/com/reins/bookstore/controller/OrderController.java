@@ -61,8 +61,6 @@ public class OrderController {
 
         System.out.println(user_id);
 
-//        orderServiceImpl.addOrder(user_id);
-
         return "订单已接收";
 
     }
