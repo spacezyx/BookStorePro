@@ -38,6 +38,10 @@ export class SideBar extends React.Component {
         history.push("/CartView")
     }
 
+    OrderViewOnClick = ()=>{
+        history.push("/OHome")
+    }
+
 
 
     render() {
@@ -54,7 +58,7 @@ export class SideBar extends React.Component {
                         <Icon type="shopping-cart" style={{ fontSize: '18px'}} />
                         <span style={{ fontSize: '16px'}}>My Cart</span>
                     </Menu.Item>
-                    <Menu.Item key="3">
+                    <Menu.Item key="3" onClick={this.OrderViewOnClick}>
                         <Icon type="solution"  style={{ fontSize: '18px'}}/>
                         <span style={{ fontSize: '16px'}}>My Orders</span>
                     </Menu.Item>

@@ -54,7 +54,6 @@ export class BookDetail extends React.Component{
 
     handleAdd = ()=>{
         var data = {
-            "user_id":this.state.user_id,
             "book_id":this.props.info.bookId,
             "num":this.state.num
         }

@@ -7,3 +7,9 @@ export const addOrder = (data,callback) => {
     const url = `${config.apiUrl}/addOrder`;
     postRequest(url, data, callback);
 };
+
+
+export const getOrder = (data,callback) => {
+    const url = `${config.apiUrl}/getOrder`;
+    postRequest(url,data, callback);
+};

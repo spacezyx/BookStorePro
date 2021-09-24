@@ -1,7 +1,9 @@
 package com.reins.bookstore.controller;
 
 import com.reins.bookstore.entity.CartResult;
+import com.reins.bookstore.security.SecurityUtils;
 import com.reins.bookstore.service.CartService;
+import com.reins.bookstore.service.UserService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -15,7 +17,7 @@ import java.util.List;
 
 //有状态服务
 @RestController
-@Scope("prototype")
+@Scope("session")
 public class CartController {
     @Autowired
     private CartService cartService;
@@ -23,18 +25,21 @@ public class CartController {
     @Autowired
     WebApplicationContext applicationContext;
 
+    @Autowired
+    private UserService userService;
+
+    String username = SecurityUtils.getCurrentUsername();
+
     @RequestMapping("/getCarts")
-    public List<CartResult> getCartsByUser_id(@RequestBody Object params) {
-        JSONObject jsonObject = JSONObject.fromObject(params);
-        Integer user_id = jsonObject.getInt("user_id");
-        System.out.println(user_id);
+    public List<CartResult> getCartsByUser_id() {
+        Integer user_id = userService.getUserId(username);
         return cartService.getCartsByUser_id(user_id);
     }
 
     @RequestMapping("/addCart")
     public String addCart(@RequestBody Object params) {
+        Integer user_id = userService.getUserId(username);
         JSONObject jsonObject = JSONObject.fromObject(params);
-        Integer user_id = jsonObject.getInt("user_id");
         Integer book_id = jsonObject.getInt("book_id");
         Integer num = jsonObject.getInt("num");
         System.out.println(user_id);

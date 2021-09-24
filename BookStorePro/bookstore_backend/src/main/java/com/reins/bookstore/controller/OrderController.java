@@ -1,12 +1,17 @@
 package com.reins.bookstore.controller;
 
+import com.reins.bookstore.entity.CartResult;
+import com.reins.bookstore.entity.OrderInfo;
 import com.reins.bookstore.entity.OrderQueue;
+import com.reins.bookstore.security.SecurityUtils;
 import com.reins.bookstore.service.OrderService;
+import com.reins.bookstore.service.UserService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
@@ -20,36 +25,29 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.jms.ConnectionFactory;
+import java.io.Console;
+import java.util.List;
 
 
 //JMS异步处理订单程序 controller A：反馈给用户订单已接收并将订单数据发送到OrderQueue
 @RestController
-@EnableJms
+@Scope("session")
 public class OrderController {
-
-    @Bean
-    public JmsListenerContainerFactory<?> myFactory(@Qualifier("jmsConnectionFactory") ConnectionFactory connectionFactory,
-                                                    DefaultJmsListenerContainerFactoryConfigurer configurer) {
-        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        configurer.configure(factory, connectionFactory);
-        return factory;
-    }
-
-    @Bean
-    public MessageConverter jacksonJmsMessageConverter() {
-        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        converter.setTargetType(MessageType.TEXT);
-        converter.setTypeIdPropertyName("_type");
-        return converter;
-    }
 
     @Autowired
     WebApplicationContext applicationContext;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
+
+    String username = SecurityUtils.getCurrentUsername();
+
     @RequestMapping("/addOrder")
     public String addOrder(@RequestBody Object params) {
-        JSONObject jsonObject = JSONObject.fromObject(params);
-        Integer user_id = jsonObject.getInt("user_id");
+        Integer user_id = userService.getUserId(username);
         JmsTemplate jmsTemplate = applicationContext.getBean(JmsTemplate.class);
 
         System.out.println("Sending an message to service");
@@ -58,7 +56,11 @@ public class OrderController {
         System.out.println(user_id);
 
         return "订单已接收";
-
     }
 
+    @RequestMapping("/getOrder")
+    public List<CartResult> getOrder(@RequestBody Object params) {
+        Integer user_id = userService.getUserId(username);
+        return orderService.getOrder(user_id);
+    }
 }

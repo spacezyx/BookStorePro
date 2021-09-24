@@ -1,20 +1,17 @@
 import React from 'react';
-import {Button, message} from 'antd'
-import {getCarts} from "../services/cartService";
 import {Table, Tooltip} from 'antd';
-import {addOrder} from "../services/OrderService";
-import {getBooks} from "../services/bookService";
+import {getOrder} from "../services/OrderService";
+import {withRouter} from "react-router-dom";
 
 
-// 新增购物车表格，用于展示购物车数据
-export class CartTable extends React.Component {
+export class OrderTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {books: []};
     }
 
 
-    getCarts = () => {
+    getOrder = () => {
         console.log("进了这个函数吗？")
         const callback = (data) => {
             console.log("this is data"+data)
@@ -24,33 +21,22 @@ export class CartTable extends React.Component {
         };
         console.log(this.state.books)
 
-        getCarts({},callback);
+        getOrder({},callback);
     }
-
-    addOrder = (state, callback) => {
-        const callback1 = (data) => {
-            this.setState({
-                books: data
-            });
-        };
-        console.log(this.state.books)
-        this.forceUpdate();
-        message.success('订单已接收');
-        // this.setState(state, callback);
-        addOrder({}, callback1);
-
-    }
-
 
     componentDidMount() {
 
+        this.getOrder();
+        console.log("进了这个函数吗？")
+                const callback = (data) => {
+                    console.log("this is data"+data)
+                    this.setState({
+                        books: data
+                    });
+                };
+                console.log(this.state.books)
 
-        var user_id = localStorage.getItem("user_id");
-
-        this.setState({user_id: user_id});
-        console.log("www" + user_id);
-
-        this.getCarts();
+                // getOrder({},callback);
     }
 
     render() {
@@ -88,7 +74,7 @@ export class CartTable extends React.Component {
                 ),
             },
             {
-                title: 'Num',
+                title: 'num',
                 dataIndex: 'num',
                 key: 'num',
                 width: 80,
@@ -98,13 +84,6 @@ export class CartTable extends React.Component {
         return (
             <div>
                 <Table columns={columns} dataSource={this.state.books}/>
-                <div className={"button-groups"}>
-
-                    <Button type="danger" icon="pay-circle" size={"large"} style={{marginLeft: "15%"}} ghost
-                            onClick={this.addOrder}>
-                        现在下单
-                    </Button>
-                </div>
             </div>
 
         );
