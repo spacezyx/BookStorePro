@@ -7,12 +7,11 @@ import {withRouter} from "react-router-dom";
 import {BookCarousel} from "../components/BookCarousel";
 import {SearchBar} from "../components/SearchBar";
 import {BookList} from "../components/BookList";
-import {OrderTable} from "../components/OrderTable";
-import {BookDetail} from "../components/BookDetail";
+import {ChatRoom} from "../components/ChatRoom";
 
 const { Header, Content, Footer } = Layout;
 
-class OrderView extends React.Component{
+class ChatView extends React.Component{
 
     componentDidMount(){
     }
@@ -21,11 +20,11 @@ class OrderView extends React.Component{
         return(
             <div className="home-content">
                 <div className={"foot-wrapper"}>
-                    <OrderTable/>
+                    <ChatRoom/>
                 </div>
             </div>
         );
     }
 }
 
-export default withRouter(OrderView);
+export default withRouter(ChatView);

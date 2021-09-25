@@ -9,6 +9,8 @@ import HomeView from "./HomeView";
 import BookView from "./BookView";
 import AdminView from "./AdminView";
 import CartView from "./CartView";
+import ChatView from "./ChatView";
+import OrderView from "./OrderView";
 
 
 const { Header, Content, Footer } = Layout;
@@ -33,6 +35,8 @@ class HomeLayout extends React.Component{
                             <Route path="/bookDetails" component={BookView}/>
                             <Route path="/admin" component={AdminView}/>
                             <Route path="/CartView" component={CartView}/>
+                            <Route path="/ChatView" component={ChatView}/>
+                            <Route path="/OrderView" component={OrderView}/>
                         </Switch>
                     </Content>
                 </Layout>

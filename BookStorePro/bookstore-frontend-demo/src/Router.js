@@ -11,6 +11,7 @@ import OrderView from "./view/OrderView";
 import Home from "./view/OrderView";
 import OrderHome from "./view/OrderView";
 import OHome from "./view/OrderView";
+import ChatView from "./view/ChatView";
 
 
 class BasicRoute extends React.Component{
@@ -31,8 +32,8 @@ class BasicRoute extends React.Component{
                     <LoginRoute exact path="/login" component={LoginView} />
                     <PrivateRoute  path="/" component={HomeLayout} />
                     <Route path="/CartView" component={CartView} />
-                    <Route path="/OHome" component={OHome} />
-                    {/*<Route exact path="/CartView" component={CartView} />*/}
+                    <Route path="/OrderView" component={OrderView} />
+                    <Route path="/ChatView" component={ChatView} />
                     {/*<Route exact path="/OrderView" component={OrderView} />*/}
                     <Redirect from="/*" to="/home" />
                 </Switch>

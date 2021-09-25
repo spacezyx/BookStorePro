@@ -39,7 +39,11 @@ export class SideBar extends React.Component {
     }
 
     OrderViewOnClick = ()=>{
-        history.push("/OHome")
+        history.push("/OrderView")
+    }
+
+    ChatViewOnClick = ()=>{
+        history.push("/ChatView")
     }
 
 
@@ -62,7 +66,7 @@ export class SideBar extends React.Component {
                         <Icon type="solution"  style={{ fontSize: '18px'}}/>
                         <span style={{ fontSize: '16px'}}>My Orders</span>
                     </Menu.Item>
-                    <Menu.Item key="4">
+                    <Menu.Item key="4" onClick={this.ChatViewOnClick}>
                         <Icon type="user" style={{ fontSize: '18px'}}/>
                         <span style={{ fontSize: '16px'}}>My Profile</span>
                     </Menu.Item>

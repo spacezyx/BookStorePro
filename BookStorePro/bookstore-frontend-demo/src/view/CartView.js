@@ -5,6 +5,7 @@ import {withRouter} from "react-router-dom";
 import {CartTable} from "../components/CartTable";
 import {getUserId, getUserName} from "../services/userService";
 import {OrderTable} from "../components/OrderTable";
+import {ChatRoom} from "../components/ChatRoom";
 
 
 // 新增购物车页面 用于下订单等操作
