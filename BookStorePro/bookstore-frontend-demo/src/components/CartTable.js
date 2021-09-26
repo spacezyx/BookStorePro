@@ -36,20 +36,12 @@ export class CartTable extends React.Component {
         console.log(this.state.books)
         this.forceUpdate();
         message.success('订单已接收');
-        // this.setState(state, callback);
-        addOrder({}, callback1);
 
+        addOrder(this.state.books, callback1);
     }
 
 
     componentDidMount() {
-
-
-        var user_id = localStorage.getItem("user_id");
-
-        this.setState({user_id: user_id});
-        console.log("www" + user_id);
-
         this.getCarts();
     }
 

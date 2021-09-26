@@ -68,7 +68,7 @@ export class SideBar extends React.Component {
                     </Menu.Item>
                     <Menu.Item key="4" onClick={this.ChatViewOnClick}>
                         <Icon type="user" style={{ fontSize: '18px'}}/>
-                        <span style={{ fontSize: '16px'}}>My Profile</span>
+                        <span style={{ fontSize: '16px'}}>Chat Room</span>
                     </Menu.Item>
                     {
                         this.state.userRoles.indexOf('Admin')>-1?

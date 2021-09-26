@@ -9,6 +9,7 @@ import com.reins.bookstore.repository.OrderRepository;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,21 +27,18 @@ public class OrderDaoImpl implements OrderDao {
 
     @Autowired
     private BookRepository bookRepository;
-
+    
     @Override
-    public void addOrder(Integer user_id){
+    public void addOrder(Integer user_id,List<BookItem> bookItems){
         orderRepository.addOrder(user_id);
         Integer order_id = orderRepository.last_insert_id();
         System.out.println("最新主键："+order_id);
 
-        List<Cart> re = cartRepository.getCarts(user_id);
-        int size = re.size();
-        System.out.println(size);
-
+        int size = bookItems.size();
 
         for(int i=0;i<size;i++){
-            Integer book_id = re.get(i).getBook_id();
-            Integer num = re.get(i).getNum();
+            Integer book_id = bookItems.get(i).getBook_id();
+            Integer num = bookItems.get(i).getNum();
             orderInfoRepository.addOrderInfo(book_id,order_id,num);
         }
     }
@@ -52,7 +50,6 @@ public class OrderDaoImpl implements OrderDao {
         int size = IDs.size();
         List<OrderInfo> re = new ArrayList<>();
         List<OrderInfo> tmp = new ArrayList<>();
-//        int tmpsize = tmp.size();
         for(int i=0;i<size;i++){
             Integer tmpid = IDs.get(i).getId();
             tmp = orderInfoRepository.getOrder(tmpid);

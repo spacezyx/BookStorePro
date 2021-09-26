@@ -1,31 +1,22 @@
 package com.reins.bookstore.controller;
 
+import com.reins.bookstore.entity.BookItem;
 import com.reins.bookstore.entity.CartResult;
-import com.reins.bookstore.entity.OrderInfo;
 import com.reins.bookstore.entity.OrderQueue;
 import com.reins.bookstore.security.SecurityUtils;
 import com.reins.bookstore.service.OrderService;
 import com.reins.bookstore.service.UserService;
-import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
-import org.springframework.jms.annotation.EnableJms;
-import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
-import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
-import org.springframework.jms.support.converter.MessageConverter;
-import org.springframework.jms.support.converter.MessageType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.jms.ConnectionFactory;
-import java.io.Console;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,14 +38,25 @@ public class OrderController {
 
     @RequestMapping("/addOrder")
     public String addOrder(@RequestBody Object params) {
+        JSONArray json = JSONArray.fromObject(params);
+        System.out.println(json);
+        List<CartResult> jsonObject= JSONArray.toList(json,new CartResult(),new JsonConfig());
+
+        List<BookItem> res = new ArrayList<>();
+        Integer size = jsonObject.size();
+        for(int i = 0; i < size; i++){
+            BookItem tmp = new BookItem();
+            tmp.setBook_id(jsonObject.get(i).getBook().getBookId());
+            tmp.setNum(jsonObject.get(i).getNum());
+            res.add(tmp);
+        }
+        System.out.println(res);
+
         Integer user_id = userService.getUserId(username);
         JmsTemplate jmsTemplate = applicationContext.getBean(JmsTemplate.class);
-
         System.out.println("Sending an message to service");
-        jmsTemplate.convertAndSend("order", new OrderQueue("order",user_id));
-
+        jmsTemplate.convertAndSend("order", new OrderQueue(user_id,res));
         System.out.println(user_id);
-
         return "订单已接收";
     }
 
