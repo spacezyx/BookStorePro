@@ -1,15 +1,16 @@
 package com.reins.bookstore.serviceimpl;
 
-import com.reins.bookstore.entity.BookItem;
-import com.reins.bookstore.entity.CartResult;
-import com.reins.bookstore.entity.OrderInfo;
-import com.reins.bookstore.entity.OrderQueue;
 import com.reins.bookstore.dao.CartDao;
 import com.reins.bookstore.dao.OrderDao;
+import com.reins.bookstore.entity.BookItem;
+import com.reins.bookstore.entity.CartResult;
+import com.reins.bookstore.entity.OrderQueue;
+import com.reins.bookstore.service.BookService;
 import com.reins.bookstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -21,14 +22,25 @@ public class OrderServiceImpl implements OrderService {
     private CartDao cartDao;
 
     @Autowired
+    private BookService bookService;
+
+    @Autowired
     private OrderDao orderDao;
 
-    @JmsListener(destination = "order")
-    public void addOrder(OrderQueue order){
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
+    @JmsListener(destination = "order",containerFactory = "myFactory")
+    public void addOrder(OrderQueue order) throws Exception{
         Integer user_id = order.getUser_id();
         List<BookItem> bookItems = order.getBookItems();
-        orderDao.addOrder(user_id,bookItems);
-        cartDao.cleanCartByUser_Id(user_id);
+        Integer order_id = orderDao.addOrder(user_id);
+        int size = bookItems.size();
+
+        for(int i=0;i<size;i++){
+            Integer book_id = bookItems.get(i).getBook_id();
+            Integer num = bookItems.get(i).getNum();
+            orderDao.addOrderInfo(order_id,book_id,num);
+            bookService.decreaseInventory(num,book_id);
+        }
     }
 
     @Override

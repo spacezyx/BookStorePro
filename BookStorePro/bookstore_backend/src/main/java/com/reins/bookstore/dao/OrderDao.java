@@ -7,7 +7,9 @@ import com.reins.bookstore.entity.OrderInfo;
 import java.util.List;
 
 public interface OrderDao {
-    void addOrder(Integer user_id,List<BookItem> bookItems);
+    Integer addOrder(Integer user_id);
+
+    void addOrderInfo(Integer order_id,Integer book_id,Integer num);
 
     List<CartResult> getOrder(Integer user_id);
 }

@@ -100,9 +100,6 @@ CREATE TABLE `cart` (
                          FOREIGN KEY(book_id) REFERENCES book(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `cart` VALUES ('1','1','2','3' ),
-                           ('2','1','3','4');
-
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
                         `id` int(11) AUTO_INCREMENT,
@@ -110,9 +107,6 @@ CREATE TABLE `order` (
                         PRIMARY KEY (`id`),
                         FOREIGN KEY(user_id) REFERENCES user(user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `order` VALUES ('1','1'),
-                          ('2','3');
 
 DROP TABLE IF EXISTS `order_info`;
 CREATE TABLE `order_info` (
@@ -123,6 +117,3 @@ CREATE TABLE `order_info` (
                         PRIMARY KEY (`id`),
                         FOREIGN KEY(book_id) REFERENCES book(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `order_info` VALUES ('1','1','1','1'),
-                           ('2','1','1','2');

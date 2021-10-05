@@ -27,20 +27,19 @@ public class OrderDaoImpl implements OrderDao {
 
     @Autowired
     private BookRepository bookRepository;
-    
+
+
     @Override
-    public void addOrder(Integer user_id,List<BookItem> bookItems){
+    public Integer addOrder(Integer user_id){
         orderRepository.addOrder(user_id);
         Integer order_id = orderRepository.last_insert_id();
         System.out.println("最新主键："+order_id);
+        return order_id;
+    }
 
-        int size = bookItems.size();
-
-        for(int i=0;i<size;i++){
-            Integer book_id = bookItems.get(i).getBook_id();
-            Integer num = bookItems.get(i).getNum();
-            orderInfoRepository.addOrderInfo(book_id,order_id,num);
-        }
+    @Override
+    public void addOrderInfo(Integer order_id,Integer book_id,Integer num){
+        orderInfoRepository.addOrderInfo(book_id,order_id,num);
     }
 
     @Override

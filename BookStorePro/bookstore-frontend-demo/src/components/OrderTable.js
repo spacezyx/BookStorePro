@@ -74,7 +74,7 @@ export class OrderTable extends React.Component {
                 ),
             },
             {
-                title: 'num',
+                title: 'Num',
                 dataIndex: 'num',
                 key: 'num',
                 width: 80,

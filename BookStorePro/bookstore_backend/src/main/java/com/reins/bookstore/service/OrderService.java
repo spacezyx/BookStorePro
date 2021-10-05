@@ -7,7 +7,7 @@ import com.reins.bookstore.entity.OrderQueue;
 import java.util.List;
 
 public interface OrderService {
-    void addOrder(OrderQueue order);
+    void addOrder(OrderQueue order) throws Exception;
 
     List<CartResult> getOrder(Integer user_id);
 }

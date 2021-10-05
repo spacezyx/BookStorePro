@@ -47,4 +47,14 @@ public class BookDaoImpl implements BookDao {
     public Integer getBookInventorySum() {
         return bookRepository.getBookInventorySum();
     }
+
+    @Override
+    public Integer getBookInventory(Integer id){
+        return bookRepository.getBookInventory(id);
+    }
+
+    @Override
+    public void decreaseInventory(Integer num,Integer id){
+        bookRepository.decreaseInventory(num,id);
+    }
 }

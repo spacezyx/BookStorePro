@@ -9,7 +9,7 @@ export class ChatRoom extends React.Component {
         super(props);
         this.state = {
             name:null,
-            textarea:null,
+            textarea:'',
             userlist:null,
             inputValue:'',
             userName:'',

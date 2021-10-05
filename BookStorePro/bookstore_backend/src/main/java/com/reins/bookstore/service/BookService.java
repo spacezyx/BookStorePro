@@ -16,4 +16,7 @@ public interface BookService {
     Image findImageByBookId(Integer id);
 
     BookStatistic getBookStatistic();
+
+    void decreaseInventory(Integer num,Integer book_id) throws Exception;
+
 }
