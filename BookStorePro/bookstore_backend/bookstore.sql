@@ -117,3 +117,10 @@ CREATE TABLE `order_info` (
                         PRIMARY KEY (`id`),
                         FOREIGN KEY(book_id) REFERENCES book(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `visit`;
+CREATE TABLE `visit` (
+                              `id` int(11) AUTO_INCREMENT,
+                              `times` int(11) DEFAULT NULL,
+                              PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
