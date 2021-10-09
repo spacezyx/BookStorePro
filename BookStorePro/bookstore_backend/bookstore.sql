@@ -86,7 +86,7 @@ INSERT INTO `image` VALUES ('1','http://img3m4.ddimg.cn/32/35/23579654-1_u_3.jpg
                             ('2','http://img3m5.ddimg.cn/26/14/25238195-1_w_3.jpg'),
                             ('3', 'http://img3m6.ddimg.cn/31/22/23828836-1_w_8.jpg'),
                            ('4','http://img3m9.ddimg.cn/75/6/25067469-1_u_2.jpg' ),
-                           ('5','http://img3m9.ddimg.cn/75/6/25067469-1_u_2.jpg'),
+                           ('5','http://img3m2.ddimg.cn/84/17/23273202-1_w_1.jpg'),
                            ('6', 'http://img3m1.ddimg.cn/88/0/25479421-1_w_1.jpg');
 
 DROP TABLE IF EXISTS `cart`;
@@ -120,7 +120,9 @@ CREATE TABLE `order_info` (
 
 DROP TABLE IF EXISTS `visit`;
 CREATE TABLE `visit` (
-                              `id` int(11) AUTO_INCREMENT,
-                              `times` int(11) DEFAULT NULL,
-                              PRIMARY KEY (`id`)
+                         `id` int(11) AUTO_INCREMENT,
+                         `times` int(11) DEFAULT NULL,
+                         PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into visit values (1,0);

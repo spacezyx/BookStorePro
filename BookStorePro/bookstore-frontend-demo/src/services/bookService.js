@@ -18,3 +18,8 @@ export const getBookImage = (id, callback) => {
     const url = `${config.apiUrl}/getBookImage`;
     postRequest_v2(url, data, callback);
 };
+
+export const visitTimes = (data, callback) => {
+    const url = `${config.apiUrl}/visitTimes`;
+    postRequest(url, data, callback);
+};

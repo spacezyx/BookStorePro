@@ -40,6 +40,7 @@ public class OrderServiceImpl implements OrderService {
             Integer num = bookItems.get(i).getNum();
             orderDao.addOrderInfo(order_id,book_id,num);
             bookService.decreaseInventory(num,book_id);
+            cartDao.cleanCartByBook_Id(book_id);
         }
     }
 

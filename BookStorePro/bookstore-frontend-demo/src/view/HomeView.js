@@ -7,12 +7,19 @@ import {withRouter} from "react-router-dom";
 import {BookCarousel} from "../components/BookCarousel";
 import {SearchBar} from "../components/SearchBar";
 import {BookList} from "../components/BookList";
+import {visitTimes} from "../services/bookService";
 
 const { Header, Content, Footer } = Layout;
 
 class HomeView extends React.Component{
 
     componentDidMount(){
+        const callback =  (data) => {
+            this.setState({books:data});
+        };
+
+        visitTimes({"search":null}, callback);
+
     }
 
     render(){

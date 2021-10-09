@@ -44,8 +44,8 @@ public class CartDaoImpl implements CartDao {
     }
 
     @Override
-    public void cleanCartByUser_Id(Integer user_id){
-        cartRepository.cleanCartByUser_Id(user_id);
+    public void cleanCartByBook_Id(Integer book_id){
+        cartRepository.cleanCartByBook_Id(book_id);
     }
 
 }
