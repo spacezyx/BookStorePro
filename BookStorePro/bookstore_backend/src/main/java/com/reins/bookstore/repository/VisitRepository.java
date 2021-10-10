@@ -14,4 +14,7 @@ public interface VisitRepository extends JpaRepository<Visit,Integer> {
     @Modifying
     @Query(value = "UPDATE Visit SET  times = (times+1) WHERE id = 1")
     void visitTimes();
+
+    @Query("SELECT times FROM Visit where id = 1")
+    Integer getVists();
 }

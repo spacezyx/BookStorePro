@@ -18,5 +18,10 @@ public class VisitController {
         visitService.visitTimes();
     }
 
+    @RequestMapping("/getVists")
+    public Integer getVists() {
+        return visitService.getVists();
+    }
+
 
 }

@@ -14,4 +14,9 @@ public class VisitDaoImpl implements VisitDao {
     public void visitTimes(){
         visitRepository.visitTimes();
     }
+
+    @Override
+    public Integer getVists(){
+        return visitRepository.getVists();
+    }
 }
