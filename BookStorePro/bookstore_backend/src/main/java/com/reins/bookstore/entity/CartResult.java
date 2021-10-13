@@ -1,10 +1,6 @@
 package com.reins.bookstore.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 
 @Data
