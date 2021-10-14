@@ -25,7 +25,7 @@ class HomeView extends React.Component{
     render(){
         return(
             <div className="home-content">
-                <SearchBar />
+                {/*<SearchBar />*/}
 
                 <BookCarousel />
                 <BookList />

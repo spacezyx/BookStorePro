@@ -23,3 +23,9 @@ export const visitTimes = (data, callback) => {
     const url = `${config.apiUrl}/visitTimes`;
     postRequest(url, data, callback);
 };
+
+export const searchDescriptions = (text, callback) => {
+    const data = {text: text};
+    const url = `${config.apiUrl}/searchDescriptions`;
+    postRequest_v2(url, data, callback);
+};
