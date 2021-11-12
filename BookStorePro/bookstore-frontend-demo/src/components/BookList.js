@@ -1,13 +1,14 @@
 import React from 'react';
 import {AutoComplete, Button, Icon, Input, List} from 'antd'
 import {Book} from './Book'
-import {getBooks, searchDescriptions} from "../services/bookService";
+import {findAuthor, getBooks, searchDescriptions} from "../services/bookService";
 
 export class BookList extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state = {books:[]};
+        this.state = {books:[],inputValue:''
+        };
     }
 
     componentDidMount() {
@@ -36,6 +37,24 @@ export class BookList extends React.Component{
             getBooks({"search":null}, callback);
         }
     };
+
+
+    InputOnChange = (e) => {
+        this.setState({
+            inputValue: e.target.value
+        });
+        console.log("value is "+e.target.value);
+    };
+
+    findAuthor = value => {
+        if(value){
+            const callback = (data) => {
+                this.setState({inputValue: data});
+            };
+            var da = value.target.value;
+            findAuthor(da, callback);
+        }
+    }
 
 
     render() {
@@ -68,6 +87,8 @@ export class BookList extends React.Component{
                     />
                 </AutoComplete>
             </div>
+
+                {/*<Input cols={200} rows={1}  disabled={this.state.inputDisable} onPressEnter={this.findAuthor} onChange={this.InputOnChange} value={this.state.inputValue} />*/}
 
             <List
                 grid={{gutter: 10, column: 4}}

@@ -29,3 +29,9 @@ export const searchDescriptions = (text, callback) => {
     const url = `${config.apiUrl}/searchDescriptions`;
     postRequest_v2(url, data, callback);
 };
+
+export const findAuthor = (name, callback) => {
+    const data = {name: name};
+    const url = `${config.zuulUrl}/FINDAUTHOR/FindAuthor`;
+    postRequest_v2(url, data, callback);
+};
