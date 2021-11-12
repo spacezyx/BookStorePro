@@ -19,7 +19,7 @@ public class SearchRepository {
 			result.setType(book.get(i).getType());
 			result.setAuthor(book.get(i).getAuthor());
 			result.setPrice(book.get(i).getPrice());
-			result.setDescription(book.get(i).getDescription());
+			result.setDescription(book.get(i).getDescription().getData());
 			result.setInventory(book.get(i).getInventory());
 			result.setImage(book.get(i).getBookImage().getImageFile());
 			res.add(result);

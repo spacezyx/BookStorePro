@@ -28,7 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -37,12 +36,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @ClassName BookServiceImpl
- * @Description the Implement of BookService
- * @Author thunderBoy
- * @Date 2019/11/6 16:04
- */
+
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -137,7 +131,7 @@ public class BookServiceImpl implements BookService {
 
         int size = books.size();
         for(int i = 0; i < size; i++){
-            list1.add(new Descriptions(books.get(i).getBookId(), books.get(i).getDescription()));
+            list1.add(new Descriptions(books.get(i).getBookId(), books.get(i).getDescription().getData()));
         }
 
         // 创建文档的集合
@@ -148,7 +142,7 @@ public class BookServiceImpl implements BookService {
             Document document1 = new Document();
             //StringField会创建索引，但是不会被分词，TextField，即创建索引又会被分词。
             document1.add(new StringField("id", list1.get(i).getId() +"", Field.Store.YES));
-            document1.add(new TextField("descriptions", list1.get(i).getDescriptions(), Field.Store.YES));
+            document1.add(new TextField("descriptions", list1.get(i).getData(), Field.Store.YES));
             docs.add(document1);
         }
 

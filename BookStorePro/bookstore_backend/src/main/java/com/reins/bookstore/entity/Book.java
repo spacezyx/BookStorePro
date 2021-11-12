@@ -1,18 +1,22 @@
 package com.reins.bookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.*;
 
-@Data
+
 @Entity
-@Table(name = "book")
+@Table(name = "book",schema = "bookstore")
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "bookId")
 public class Book {
 
     public int getBookId() {
@@ -35,6 +39,7 @@ public class Book {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
+    @Column(name = "isbn")
     private String isbn;
 
     public String getName() {
@@ -45,6 +50,7 @@ public class Book {
         this.name = name;
     }
 
+    @Column(name = "name")
     private String name;
 
     public String getType() {
@@ -55,6 +61,7 @@ public class Book {
         this.type = type;
     }
 
+    @Column(name = "type")
     private String type;
 
     public String getAuthor() {
@@ -65,6 +72,7 @@ public class Book {
         this.author = author;
     }
 
+    @Column(name = "author")
     private String author;
 
     public Double getPrice() {
@@ -75,15 +83,9 @@ public class Book {
         this.price = price;
     }
 
+    @Column(name = "price")
     private Double price;
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public Integer getInventory() {
         return inventory;
@@ -93,29 +95,12 @@ public class Book {
         this.inventory = inventory;
     }
 
-    private String description;
-
     public void setBookImage(Image bookImage) {
         this.bookImage = bookImage;
     }
 
+    @Column(name = "inventory")
     private Integer inventory;
-
-    public Book(){
-    }
-    public  Book(int bookId,String isbn,String name,String type,String author,Double price,String description,Integer inventory,Image bookImage){
-        this.bookId = bookId;
-        this.isbn = isbn;
-        this.name = name;
-        this.type = type;
-        this.author = author;
-        this.price = price;
-        this.description = description;
-        this.inventory = inventory;
-        this.bookImage = bookImage;
-    }
-
-
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -125,5 +110,20 @@ public class Book {
 
     public Image getBookImage() {
         return bookImage;
+    }
+
+    public Book() {
+
+    }
+
+    @Transient
+    private Descriptions description;
+    @Transient
+    public Descriptions getDescription() {
+        return description;
+    }
+
+    public void setDescription(Descriptions description) {
+        this.description = description;
     }
 }

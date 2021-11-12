@@ -5,17 +5,16 @@ import com.alibaba.fastjson.JSONArray;
 import com.reins.bookstore.Utils.RedisUtil;
 import com.reins.bookstore.dao.BookDao;
 import com.reins.bookstore.entity.Book;
+import com.reins.bookstore.entity.Descriptions;
 import com.reins.bookstore.entity.Image;
 import com.reins.bookstore.entity.vo.BookStatistic;
 import com.reins.bookstore.repository.BookRepository;
+import com.reins.bookstore.repository.DescriptionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //新增Redis缓存
 @Repository
@@ -23,6 +22,9 @@ public class BookDaoImpl implements BookDao {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private DescriptionsRepository descriptionsRepository;
 
     @Autowired
     RedisUtil redisUtil;
@@ -38,6 +40,15 @@ public class BookDaoImpl implements BookDao {
             System.out.println("Book: " + id + " is not in Redis");
             System.out.println("Searching Book: " + id + " in MySQL");
             book = bookRepository.getById(id);
+            Optional<Descriptions> icon = descriptionsRepository.findById(id);
+            if (icon.isPresent()){
+                System.out.println("Not Null " + id);
+                book.setDescription(icon.get());
+            }
+            else{
+                book.setDescription(null);
+                System.out.println("It's Null");
+            }
             System.out.println(book);
             Map<String,Object> map = new HashMap<>();
             map.put("bookId",book.getBookId());
