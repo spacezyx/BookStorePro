@@ -30,6 +30,12 @@ export const searchDescriptions = (text, callback) => {
     postRequest_v2(url, data, callback);
 };
 
+export const getByTags = (tag, callback) => {
+    const data = {tag: tag};
+    const url = `${config.apiUrl}/getByTags`;
+    postRequest_v2(url, data, callback);
+};
+
 export const findAuthor = (name, callback) => {
     const data = {name: name};
     const url = `${config.zuulUrl}/FINDAUTHOR/FindAuthor`;

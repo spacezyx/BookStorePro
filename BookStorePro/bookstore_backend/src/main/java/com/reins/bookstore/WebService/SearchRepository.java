@@ -16,7 +16,7 @@ public class SearchRepository {
 			result.setId(book.get(i).getBookId());
 			result.setIsbn(book.get(i).getIsbn());
 			result.setName(book.get(i).getName());
-			result.setType(book.get(i).getType());
+			result.setType(book.get(i).getTag());
 			result.setAuthor(book.get(i).getAuthor());
 			result.setPrice(book.get(i).getPrice());
 			result.setDescription(book.get(i).getDescription().getData());

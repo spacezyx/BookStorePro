@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 
 public interface BookService {
@@ -25,4 +26,6 @@ public interface BookService {
 
     //建个索引
     void createIndex() throws IOException;
+
+    List<Book> getByTags(String Tag);
 }

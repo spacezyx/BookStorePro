@@ -7,9 +7,10 @@ import com.reins.bookstore.dao.BookDao;
 import com.reins.bookstore.entity.Book;
 import com.reins.bookstore.entity.Descriptions;
 import com.reins.bookstore.entity.Image;
-import com.reins.bookstore.entity.vo.BookStatistic;
+import com.reins.bookstore.entity.Tags;
 import com.reins.bookstore.repository.BookRepository;
 import com.reins.bookstore.repository.DescriptionsRepository;
+import com.reins.bookstore.repository.TagsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,9 @@ public class BookDaoImpl implements BookDao {
 
     @Autowired
     RedisUtil redisUtil;
+
+    @Autowired
+    private TagsRepository tagsRepository;
 
     @Override
     public Book findOne(Integer id) {
@@ -54,7 +58,7 @@ public class BookDaoImpl implements BookDao {
             map.put("bookId",book.getBookId());
             map.put("isbn",book.getIsbn());
             map.put("name",book.getName());
-            map.put("type",book.getType());
+            map.put("tag",book.getTag());
             map.put("author",book.getAuthor());
             map.put("price",book.getPrice());
             map.put("description",book.getDescription());
@@ -143,5 +147,23 @@ public class BookDaoImpl implements BookDao {
         //更新Inventory  保证一致性加上@Transactional
         bookRepository.decreaseInventory(num,id);
         redisUtil.hdecr("book"+id,"inventory",num);
+    }
+
+    @Override
+    public List<Book> getByTags(String tag){
+        List<Tags> tags = tagsRepository.findtags(tag);
+        System.out.println(tags.toString());
+        List<Book> result = new ArrayList<>();
+        Set<Integer> result_id = new HashSet<>();
+        Integer size = tags.size();
+        for(int i = 0; i < size; i++){
+            Set<Integer> tmp = bookRepository.getByTags(tags.get(i).getTag());
+            result_id.addAll(tmp);
+        }
+        for(Integer id:result_id){
+            Book tmp = findOne(id);
+            result.add(tmp);
+        }
+        return result;
     }
 }

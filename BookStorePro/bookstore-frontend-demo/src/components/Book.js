@@ -9,19 +9,32 @@ const { Meta } = Card;
 export class Book extends React.Component{
     constructor(props) {
         super(props);
-        this.state = {bookImage:""};
+        this.state = {bookImage:"",bookId:0};
     }
 
-    componentDidMount(){
+    setImage = (bookId)=>{
+        console.log(bookId)
         const callback =  (data) => {
-           this.setState({bookImage:data.imageFile});
+            this.setState({bookImage:data.imageFile
+            });
         };
-        getBookImage(this.props.info.bookId, callback);
+        getBookImage(bookId, callback);
+    }
+
+
+    componentDidMount(){
+        const {info} = this.props;
+        this.setImage(info.bookId);
+        this.setState({bookId:info.bookId});
     }
 
     render() {
 
         const {info} = this.props;
+        if(this.state.bookId!==info.bookId){
+            this.setImage(info.bookId);
+            this.setState({bookId:info.bookId});
+        }
 
         return (
             <Link to={{

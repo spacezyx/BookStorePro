@@ -8,7 +8,6 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.*;
 
 
 @Entity
@@ -53,16 +52,16 @@ public class Book {
     @Column(name = "name")
     private String name;
 
-    public String getType() {
-        return type;
+    public String getTag() {
+        return tag;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
-    @Column(name = "type")
-    private String type;
+    @Column(name = "tag")
+    private String tag;
 
     public String getAuthor() {
         return author;

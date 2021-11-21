@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 @RestController
@@ -26,6 +27,9 @@ public class BookController {
     public List<Book> getBooks(@RequestBody Map<String, String> params) {
         return bookService.getBooks();
     }
+
+    @RequestMapping("/getByTags")
+    public List<Book> getByTags(@RequestParam("tag") String tag){return bookService.getByTags(tag);}
 
     @RequestMapping("/getBook")
     public Book getBook(@RequestParam("id") Integer id){
