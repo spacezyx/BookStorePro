@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
 
 //JMS异步处理订单程序 controller A：反馈给用户订单已接收并将订单数据发送到OrderQueue
 @RestController
-@Scope("session")
+//@Scope("session")
 public class OrderController {
 
     @Autowired
@@ -34,10 +35,8 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    String username = SecurityUtils.getCurrentUsername();
-
     @RequestMapping("/addOrder")
-    public String addOrder(@RequestBody Object params) throws Exception {
+    public String addOrder(HttpServletRequest request, @RequestBody Object params) throws Exception {
         JSONArray json = JSONArray.fromObject(params);
         System.out.println(json);
         List<CartResult> jsonObject= JSONArray.toList(json,new CartResult(),new JsonConfig());
@@ -51,17 +50,19 @@ public class OrderController {
             res.add(tmp);
         }
         System.out.println(res);
-
+        String username = SecurityUtils.getCurrentUsername();
         Integer user_id = userService.getUserId(username);
 //        JmsTemplate jmsTemplate = applicationContext.getBean(JmsTemplate.class);
 //        System.out.println("Sending an message to service");
         OrderQueue q = new OrderQueue(user_id,res);
+        request.getSession().setAttribute("cart" , null);
         orderService.addOrder(q);
         return "订单已接收";
     }
 
     @RequestMapping("/getOrder")
     public List<CartResult> getOrder(@RequestBody Object params) {
+        String username = SecurityUtils.getCurrentUsername();
         Integer user_id = userService.getUserId(username);
         return orderService.getOrder(user_id);
     }
