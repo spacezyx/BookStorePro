@@ -49,9 +49,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity webSecurity ) {
-        webSecurity.ignoring().antMatchers("/websocketbot").antMatchers("/ws/search.wsdl").antMatchers("/ws/search");
+        webSecurity.ignoring().antMatchers("/websocketbot");
     }
-
-
-
 }

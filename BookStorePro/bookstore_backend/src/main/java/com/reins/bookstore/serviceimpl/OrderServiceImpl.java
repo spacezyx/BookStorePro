@@ -1,10 +1,12 @@
 package com.reins.bookstore.serviceimpl;
 
-import com.reins.bookstore.dao.CartDao;
-import com.reins.bookstore.dao.OrderDao;
+import com.reins.bookstore.dao.BookDao;
 import com.reins.bookstore.entity.BookItem;
 import com.reins.bookstore.entity.CartResult;
+import com.reins.bookstore.entity.OrderInfo;
 import com.reins.bookstore.entity.OrderQueue;
+import com.reins.bookstore.dao.CartDao;
+import com.reins.bookstore.dao.OrderDao;
 import com.reins.bookstore.service.BookService;
 import com.reins.bookstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,6 @@ public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao;
 
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
-    @JmsListener(destination = "order",containerFactory = "myFactory")
     public void addOrder(OrderQueue order) throws Exception{
         Integer user_id = order.getUser_id();
         List<BookItem> bookItems = order.getBookItems();
@@ -40,8 +41,8 @@ public class OrderServiceImpl implements OrderService {
             Integer num = bookItems.get(i).getNum();
             orderDao.addOrderInfo(order_id,book_id,num);
             bookService.decreaseInventory(num,book_id);
-            cartDao.cleanCartByBook_Id(book_id);
         }
+        cartDao.cleanCartByUser_Id(user_id);
     }
 
     @Override

@@ -37,7 +37,7 @@ public class OrderController {
     String username = SecurityUtils.getCurrentUsername();
 
     @RequestMapping("/addOrder")
-    public String addOrder(@RequestBody Object params) {
+    public String addOrder(@RequestBody Object params) throws Exception {
         JSONArray json = JSONArray.fromObject(params);
         System.out.println(json);
         List<CartResult> jsonObject= JSONArray.toList(json,new CartResult(),new JsonConfig());
@@ -53,10 +53,10 @@ public class OrderController {
         System.out.println(res);
 
         Integer user_id = userService.getUserId(username);
-        JmsTemplate jmsTemplate = applicationContext.getBean(JmsTemplate.class);
-        System.out.println("Sending an message to service");
-        jmsTemplate.convertAndSend("order", new OrderQueue(user_id,res));
-        System.out.println(user_id);
+//        JmsTemplate jmsTemplate = applicationContext.getBean(JmsTemplate.class);
+//        System.out.println("Sending an message to service");
+        OrderQueue q = new OrderQueue(user_id,res);
+        orderService.addOrder(q);
         return "订单已接收";
     }
 

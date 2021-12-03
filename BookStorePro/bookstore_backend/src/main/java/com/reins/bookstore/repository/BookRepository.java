@@ -8,15 +8,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 public interface BookRepository extends JpaRepository<Book,Integer> {
 
     @Query("select b from Book b")
     List<Book> getBooks();
-
-    @Query("select b.bookId from Book b WHERE b.tag LIKE %?1%")
-    Set<Integer> getByTags(@Param("tag") String tag);
 
     @Query("SELECT count(*) FROM Book")
     Integer getBookNumber();
