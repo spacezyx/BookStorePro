@@ -104,7 +104,7 @@ public class CartController {
         request.getSession().setAttribute("cart" , mytmp);
         System.out.println(session.getId());
         System.out.println(mytmp);
-//        redisTemplate.opsForValue().set(session.getId(), mytmp);
+        redisTemplate.opsForValue().set(session.getId(), mytmp);
 //        CartService cart1 = applicationContext.getBean(CartService.class);
 //        System.out.println(cart1);
 //        System.out.println(this);
